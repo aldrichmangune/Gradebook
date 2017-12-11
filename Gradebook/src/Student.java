@@ -11,6 +11,7 @@ public class Student {
 	private float hwGrade;
 	private float quizGrade;
 	private float finalGrade;
+	private float classGrade;
 	private String grade;
 	private Final Final;
 	private String firstName;
@@ -60,8 +61,29 @@ public class Student {
 	public void showExams(){
 		int i = 1;
 		for(Exam exam: exams){
-			System.out.println(i + ". Exam " + i + ": " + exam.score + " out of " + exam.grade);
+			System.out.println("Exam " + i + ": " + exam.score + " out of " + exam.grade);
+			i++;
 		}
+	}
+	
+	public void showHomeworks(){
+		int i = 1;
+		for(Homework hw: homeworks){
+			System.out.println("Homework " + i + ": " + hw.score + " out of " + hw.grade);
+			i++;
+		}
+	}
+	
+	public void showQuizzes(){
+		int i = 1;
+		for(Quiz q: quizzes){
+			System.out.println("Quiz " + i + ": " + q.score + " out of " + q.grade);
+			i++;
+		}
+	}
+	
+	public void showFinal(){
+		System.out.println("Final : " + Final.score + " out of " + Final.grade);
 	}
 	
 	public List<Exam> getExams(){
@@ -76,8 +98,8 @@ public class Student {
 		return quizzes;
 	}
 	
-	public void setExamGrade(float grade){
-		examGrade = grade;
+	public void setExamGrade(float newGrade){
+		this.examGrade = newGrade;
 	}
 	
 	public float getExamGrade(){
@@ -85,7 +107,7 @@ public class Student {
 	}
 	
 	public void setHWGrade(float grade){
-		hwGrade = grade;
+		this.hwGrade = grade;
 	}
 	
 	public float getHWGrade(){
@@ -93,7 +115,7 @@ public class Student {
 	}
 	
 	public void setQuizGrade(float grade){
-		quizGrade = grade;
+		this.quizGrade = grade;
 	}
 	
 	public float getQuizGrade(){
@@ -101,7 +123,7 @@ public class Student {
 	}	
 	
 	public void setFinalGrade(float grade){
-		finalGrade = grade;
+		this.finalGrade = grade;
 	}
 	
 	public float getFinalGrade(){
@@ -112,6 +134,11 @@ public class Student {
 		this.grade = grade;
 	}
 	
+	
+	public void setClassGrade(float grade){
+		this.classGrade = grade;
+	}
+	
 	public String getGrade(){
 		return grade;
 	}
@@ -120,7 +147,17 @@ public class Student {
 		exams.get(examNum).setScore(score);
 	}
 
+	public void changeHWScore(int hwNum, float score){
+		homeworks.get(hwNum).setScore(score);
+	}
 	
+	public void changeQuizScore(int quizNum, float score){
+		quizzes.get(quizNum).setScore(score);
+	}
+	
+	public void changeFinalScore(float score){
+		Final.setScore(score);
+	}
 	
 	public String getStudentName(){
 		return firstName + " "+ lastName;

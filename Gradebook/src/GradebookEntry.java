@@ -16,28 +16,42 @@ public class GradebookEntry{
 			System.out.println("2. Add new Exam");
 			System.out.println("3. Add new Homework");
 			System.out.println("4. Add new Quiz");
-			System.out.println("5. Set Final grade");
-			System.out.println("6. Change a student's score");	
-			System.out.println("7. Calculate final grade");
+			System.out.println("5. Add/Set Final grade");
+			System.out.println("6. View Class Assignments");
+			System.out.println("7. Change a student's score on an assignment");	
+			System.out.println("8. Calculate class grade");
 			System.out.println("9. Exit");
 			System.out.println("Please select an option:");
 			int input = sc.nextInt();
 			switch(input){
 			
 			case 1:
-				System.out.print("Enter weight of exams:");
+				System.out.println("");
+				System.out.println("Current weights:");
+				System.out.println("Exams - " + test.getExamWeight() + "%");
+				System.out.println("Homeworks - " + test.getHWWeight() + "%");
+				System.out.println("Quizzes - " + test.getQuizWeight() + "%");
+				System.out.println("Final - " + test.getFinalWeight() + "%");
+				System.out.println("-------------");
+				System.out.print("Enter new weight of exams:");
 				float examWeight = sc.nextFloat();
-				test.setExamWeight(examWeight);
-				System.out.print("Enter weight of homework:");
+				System.out.print("Enter new weight of homework:");
 				float hwWeight = sc.nextFloat();
-				System.out.print("Enter weight of quizzes:");
+				System.out.print("Enter new weight of quizzes:");
 				float quizWeight = sc.nextFloat();
-				System.out.print("Enter weight of final:");
+				System.out.print("Enter new weight of final:");
 				float finalWeight = sc.nextFloat();
 				if(examWeight + hwWeight + quizWeight + finalWeight != 100){
+					System.out.println("");
 					System.out.println("Weights do not add up to 100");
+					System.out.println("Weight of categories left unchanged");
 				}
 				else{
+					test.setExamWeight(examWeight);
+					test.setHomeworkWeight(hwWeight);
+					test.setQuizWeight(quizWeight);
+					test.setFinalWeight(finalWeight);
+					System.out.println("");
 					System.out.println("Exams are worth " + examWeight + "% of final grade");
 					System.out.println("Homeworks are worth " + hwWeight + "% of final grade");
 					System.out.println("Quizzes are worth " + quizWeight + "% of final grade");
@@ -60,15 +74,16 @@ public class GradebookEntry{
 			case 5:	
 				test.setFinal();		
 				break;
-
+				
 			case 6:
+				test.viewAssignments();
+				break;
+
+			case 7:
 				test.editStudent();
 				break;
 				
-			case 7:
-				test.calcExamScore();
-				test.calcHWScore();
-				test.calcQuizScore();
+			case 8:
 				test.calcFinalGrade();
 				break;
 

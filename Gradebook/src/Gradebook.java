@@ -58,6 +58,22 @@ public class Gradebook {
 		}
 	}
 
+	public float getExamWeight(){
+		return this.examWeight;
+	}
+	
+	public float getHWWeight(){
+		return this.hwWeight;
+	}
+	
+	public float getQuizWeight(){
+		return this.quizWeight;
+	}
+	
+	public float getFinalWeight(){
+		return this.finalWeight;
+	}
+	
 	public void setExamWeight(float weight){
 		examWeight = weight;
 	}
@@ -87,7 +103,7 @@ public class Gradebook {
 
 	public void addHW(){
 		Scanner sc = new Scanner(System.in);
-		System.out.println("What is the homwork out of?");
+		System.out.println("What is the homework out of?");
 		float HWGrade = sc.nextFloat();
 		for(Student student: students){
 			System.out.println("Enter grade for " + student.getStudentName() + ":");
@@ -119,34 +135,86 @@ public class Gradebook {
 		}
 	}
 
+	public void viewAssignments(){
+		for(Student student: students){
+			System.out.println(student.getStudentInfo());
+			System.out.println("Exams:");
+			student.showExams();
+			System.out.println("Homeworks:");
+			student.showHomeworks();
+			System.out.println("Quizzes:");
+			student.showQuizzes();
+			student.showFinal();
+			System.out.println(" ");
+		}
+	}
+	
+	
 	public void editStudent(){
 		Scanner sc = new Scanner(System.in);
 		System.out.println("\n\n       Select a student");
 		System.out.println("---------------------------");
 		getStudents();
-		Student student = students.get(sc.nextInt() - 1);
-		System.out.println("Change " + student.getStudentName() + "'s:" );
-		System.out.println("1. Exam");
-		System.out.println("2. Homework");
-		System.out.println("3. Quiz");
-		System.out.println("4. Final");
-		int choice = sc.nextInt();
-
-
-		if(choice == 1){
-			student.showExams();
-			System.out.println("Enter exam, then new score:");
-			int examNum = sc.nextInt();
-			float score = sc.nextFloat();
-			student.changeExamScore(examNum - 1, score);
-			System.out.println(student.getStudentName() + "'s new score for Exam " + examNum + " is " + score);
+		System.out.println("Enter any number not shown to exit");
+		int pickedStudent = sc.nextInt();
+		Student student = students.get(0);
+		
+		try{
+				if(students.get(pickedStudent - 1) != null){
+			
+				student = students.get(pickedStudent - 1);
+				System.out.println(" ");
+				System.out.println("Select which category the assignment is in for " + student.getStudentName());
+				System.out.println("-------------------");
+				System.out.println("1. Exam");
+				System.out.println("2. Homework");
+				System.out.println("3. Quiz");
+				System.out.println("4. Final");
+				int choice = sc.nextInt();
+	
+	
+				if(choice == 1){
+					student.showExams();
+					System.out.println("Enter exam number, then new score:");
+					int examNum = sc.nextInt();
+					float score = sc.nextFloat();
+					student.changeExamScore(examNum - 1, score);
+					System.out.println(student.getStudentName() + "'s new score for Exam " + examNum + " is " + score);
+				}
+				
+				if(choice == 2){
+					student.showHomeworks();
+					System.out.println("Enter homework number, then new score:");
+					int hwNum = sc.nextInt();
+					float score = sc.nextFloat();
+					student.changeHWScore(hwNum - 1, score);
+					System.out.println(student.getStudentName() + "'s new score for Homework " + hwNum + " is " + score);
+				}
+				
+				if(choice == 3){
+					student.showQuizzes();
+					System.out.println("Enter quiz number, then new score:");
+					int qNum = sc.nextInt();
+					float score = sc.nextFloat();
+					student.changeQuizScore(qNum - 1, score);
+					System.out.println(student.getStudentName() + "'s new score for Quiz " + qNum + " is " + score);
+				}
+				
+				if(choice == 4){
+					student.showFinal();
+					System.out.println("Enter new score for " + student.getStudentName());
+					float score = sc.nextFloat();
+					student.changeFinalScore(score);
+				}
+			}
+		} catch(IndexOutOfBoundsException e){
+			
 		}
-
-
 	}
 
-	public void calcExamScore(){
+	public void calcFinalGrade(){
 		for(Student student: students){
+			//Calculates Exam Category Grade
 			float maxExamScore = 0;
 			float earnedExamScore = 0;
 			float examGrade = 0;
@@ -155,12 +223,17 @@ public class Gradebook {
 				earnedExamScore = earnedExamScore + exam.score;
 			}
 			examGrade = earnedExamScore / maxExamScore;
-			student.setExamGrade(examGrade);
-		}
-	}
-
-	public void calcHWScore(){
-		for(Student student: students){
+			
+			//Calculates Quiz Category Grade
+			float maxQuizScore = 0;
+			float earnedQuizScore = 0;
+			float quizGrade = 0;
+			for(Quiz quiz : student.getQuizzes()){
+				maxQuizScore = maxQuizScore + quiz.grade;
+				earnedQuizScore = earnedQuizScore + quiz.score;
+			}
+			
+			//Calculates HW Category Grade
 			float maxHWScore = 0;
 			float earnedHWScore = 0;
 			float hwGrade = 0;
@@ -170,37 +243,21 @@ public class Gradebook {
 			}
 			hwGrade = earnedHWScore / maxHWScore;
 			student.setExamGrade(hwGrade);
-		}
-	}
-
-	public void calcQuizScore(){
-		for(Student student: students){
-			float maxQuizScore = 0;
-			float earnedQuizScore = 0;
-			float quizGrade = 0;
-			for(Quiz quiz : student.getQuizzes()){
-				maxQuizScore = maxQuizScore + quiz.grade;
-				earnedQuizScore = earnedQuizScore + quiz.score;
-			}
+			
+			
 			quizGrade = earnedQuizScore / maxQuizScore;
 			student.setExamGrade(quizGrade);
-		}
-	}
-
-	public void calcFinalGrade(){
-		for(Student student: students){
 			float examScore = 0;
 			float hwScore = 0;
 			float quizScore = 0;
 			float finalScore = 0;
 			float totalGrade = 0;
-			examScore = student.getExamGrade() * examWeight;
+			examScore = examGrade * examWeight;
 			hwScore = student.getHWGrade() * hwWeight;
 			quizScore = student.getQuizGrade() * quizWeight;
 			finalScore = student.getFinalGrade() * finalWeight;
 			totalGrade = examScore + hwScore + quizScore + finalScore;
-			student.setFinalGrade(totalGrade);
-			System.out.println(totalGrade);
+			student.setClassGrade(totalGrade);
 			if(totalGrade >= 97){
 				student.setGrade("A+");
 			}
@@ -240,7 +297,7 @@ public class Gradebook {
 			else{
 				student.setGrade("F");
 			}
-			System.out.println(student.getStudentName() + "'s grade for the class " + "is " + student.getGrade());
+			System.out.println(student.getStudentName() + "'s grade for the class " + "is " + totalGrade + ": " + student.getGrade());
 		}
 	}
 
