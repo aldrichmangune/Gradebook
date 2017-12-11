@@ -12,20 +12,25 @@ public class GradebookEntry{
 			Scanner sc = new Scanner(System.in);
 			System.out.println("\n\n       Gradebook Menu");
 			System.out.println("---------------------------");
-			System.out.println("1. Set Weights of each category");
-			System.out.println("2. Add new Exam");
-			System.out.println("3. Add new Homework");
-			System.out.println("4. Add new Quiz");
-			System.out.println("5. Add/Set Final grade");
-			System.out.println("6. View Class Assignments");
-			System.out.println("7. Change a student's score on an assignment");	
-			System.out.println("8. Calculate class grade");
-			System.out.println("9. Exit");
+			System.out.println("1. Add Student");
+			System.out.println("2. Set Weights of each category");
+			System.out.println("3. Add new Exam");
+			System.out.println("4. Add new Homework");
+			System.out.println("5. Add new Quiz");
+			System.out.println("6. Add/Set Final grade");
+			System.out.println("7. View Class Assignments");
+			System.out.println("8. Change a student's score on an assignment");	
+			System.out.println("9. Calculate class grade");
+			System.out.println("10. Exit");
 			System.out.println("Please select an option:");
 			int input = sc.nextInt();
 			switch(input){
 			
 			case 1:
+				test.addStudent();
+				break;
+				
+			case 2:
 				System.out.println("");
 				System.out.println("Current weights:");
 				System.out.println("Exams - " + test.getExamWeight() + "%");
@@ -59,35 +64,35 @@ public class GradebookEntry{
 				}
 				break;
 
-			case 2:	
+			case 3:	
 				test.addExam();		
 				break;
 				
-			case 3:	
+			case 4:	
 				test.addHW();		
 				break;
 				
-			case 4:	
+			case 5:	
 				test.addQuiz();		
 				break;
 				
-			case 5:	
+			case 6:	
 				test.setFinal();		
 				break;
 				
-			case 6:
+			case 7:
 				test.viewAssignments();
 				break;
 
-			case 7:
+			case 8:
 				test.editStudent();
 				break;
 				
-			case 8:
+			case 9:
 				test.calcFinalGrade();
 				break;
 
-			case 9:
+			case 10:
 				sc.close();
 				exit = true;
 			}

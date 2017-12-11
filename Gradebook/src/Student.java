@@ -58,6 +58,8 @@ public class Student {
 		Final = new Final(score, grade);
 	}
 	
+	public 
+	
 	public void showExams(){
 		int i = 1;
 		for(Exam exam: exams){
@@ -157,6 +159,34 @@ public class Student {
 	
 	public void changeFinalScore(float score){
 		Final.setScore(score);
+	}
+	
+	public boolean hasExam(){
+		if(exams != null){
+			return true;
+		}
+		return false;
+	}
+	
+	public boolean hasQuiz(){
+		if(quizzes != null){
+			return true;
+		}
+		return false;
+	}
+	
+	public boolean hasHW(){
+		if(homeworks != null){
+			return true;
+		}
+		return false;
+	}
+	
+	public boolean hasFinal(){
+		if(Final != null){
+			return true;
+		}
+		return false;
 	}
 	
 	public String getStudentName(){

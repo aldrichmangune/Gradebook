@@ -211,7 +211,19 @@ public class Gradebook {
 			
 		}
 	}
-
+	
+	public void addStudent(){
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Enter student's first name: ");
+		String fName = sc.nextLine();
+		System.out.println("Enter student's last name: ");
+		String lName = sc.nextLine();
+		System.out.println("Enter student's ID number: ");
+		int id = sc.nextInt();
+		Student student = new Student(fName, lName, id);
+		students.add(student);
+	}
+	
 	public void calcFinalGrade(){
 		for(Student student: students){
 			//Calculates Exam Category Grade
